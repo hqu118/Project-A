@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Path {
     private List<Node> path;
@@ -36,5 +37,19 @@ public class Path {
         }
         sb.append(" cost: " + totalCost);
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Path)) return false;
+        Path path1 = (Path) o;
+        return getTotalCost() == path1.getTotalCost() &&
+                Objects.equals(getPath(), path1.getPath());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPath(), getTotalCost());
     }
 }
