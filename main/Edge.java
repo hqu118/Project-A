@@ -15,4 +15,16 @@ public class Edge {
     public Edge(Node source, Node target) {
         this(source, target, 0);
     }
+
+    public Edge getNext() {
+        return next;
+    }
+
+    public void setNext(Edge next) {
+        this.next = next;
+    }
+
+    public Node getSource() {
+        return source;
+    }
 }
