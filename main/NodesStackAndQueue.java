@@ -37,4 +37,29 @@ public class NodesStackAndQueue {
         return lastNodeInStack;
     }
 
+    /**
+     * get the element from the top of the stack without removing it
+     *
+     * @return
+     */
+    public Node peek() {
+    	if (data.isEmpty()) {
+    		throw new EmptyStackException();
+    	}
+        return data.get(data.size()-1);
+    }
+
+    /**
+     * append an element at the end of the stack
+     *
+     * @param node
+     */
+    public void append(Node node) {
+    	data.add(0, node);//shifts all element to the right by one and add one to the index 0 position
+    }
+    
+    public ArrayList<Node> getData() {
+    	return data;
+    }
+
 }
