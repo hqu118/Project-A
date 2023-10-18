@@ -121,11 +121,13 @@ public class GraphUI {
         return sb.toString();
     }
 
+    //get the commands
     public String getCommand() {
         System.out.print(">>");
         return scanner.nextLine();
     }
 
+    //open the file
     public void open(String file) {
         setFileName(file);
 
