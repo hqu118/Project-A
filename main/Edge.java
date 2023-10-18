@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Objects;
+
 public class Edge {
     private Node source;
     private Node target;
@@ -44,5 +46,20 @@ public class Edge {
         sb.append(", weight=").append(weight);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Edge)) return false;
+        Edge edge = (Edge) o;
+        return getWeight() == edge.getWeight() &&
+                Objects.equals(getSource(), edge.getSource()) &&
+                Objects.equals(getTarget(), edge.getTarget());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSource(), getTarget(), getWeight());
     }
 }
