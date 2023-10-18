@@ -43,10 +43,10 @@ public class NodesStackAndQueue {
      * @return
      */
     public Node peek() {
-    	if (data.isEmpty()) {
-    		throw new EmptyStackException();
-    	}
-        return data.get(data.size()-1);
+        if (data.isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return data.get(data.size() - 1);
     }
 
     /**
@@ -55,11 +55,47 @@ public class NodesStackAndQueue {
      * @param node
      */
     public void append(Node node) {
-    	data.add(0, node);//shifts all element to the right by one and add one to the index 0 position
+        data.add(0, node);// shifts all element to the right by one and add one to the index 0 position
     }
-    
+
     public ArrayList<Node> getData() {
-    	return data;
+        return data;
+    }
+
+    /**
+     * remove an element from the end of the stack
+     *
+     * @return
+     */
+    public Node remove() {
+        if (data.isEmpty()) {
+            throw new EmptyStackException();
+        }
+        Node firstNodeInStack = data.get(0); // store the first node in a temp variable
+        data.remove(0); // remove the first node
+        return firstNodeInStack;
+    }
+
+    /**
+     * get the element from the end of the stack without removing it
+     *
+     * @return
+     */
+    public Node get() {
+        if (data.isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return data.get(0);
+    }
+
+    /**
+     * This method is used for printing the data in the list from head till the last
+     * node
+     */
+    public void print() {
+        for (Node node : data) {
+            System.out.println(node);
+        }
     }
 
 }
