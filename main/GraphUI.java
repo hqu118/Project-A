@@ -120,4 +120,165 @@ public class GraphUI {
         sb.append("}");
         return sb.toString();
     }
+
+
+
+    public String getCommand() {
+        System.out.print(">>");
+        return scanner.nextLine();
+    }
+
+    public void open(String file) {
+        setFileName(file);
+
+        if (!processFile()) {
+            System.out.println("File doesn't exist");
+            System.out.println("Enter a valid file name");
+        } else {
+            // refresh the vectors every time a new file is opened
+            setElements.clear();
+            relationElements.clear();
+            weightElements.clear();
+            createSetElements();
+            makeTokensGraph();
+        }
+    }
+
+    public void list() {
+        listSetMembers();
+        listRelationMembers();
+        listWeightMembers();
+    }
+
+    private void listRelationMembers() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (String rel : relationElements) {
+            sb.append("(");
+            sb.append(rel);
+            sb.append(")");
+        }
+        sb.append("}");
+        System.out.println("The relational elements are: " + sb.toString());
+
+    }
+
+    private void listWeightMembers() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        int size = weightElements.size();
+        for (String wt : weightElements) {
+            sb.append(wt);
+            size--;
+            if (size > 0) {
+                sb.append(",");
+            }
+        }
+        sb.append("}");
+        System.out.println("The weight elements are: " + sb.toString());
+
+    }
+
+    protected void listShortestPath(Path path) {
+        if (path == null) {
+            throw new RuntimeException(" target is not reachable from source");
+        }
+
+
+        int size = path.getPath().size();
+        //path has to be at least size 2 or more
+        if (size == 0) {
+            throw new RuntimeException("Shortest path is Empty or has no cost");
+        } else if (size == 1) {
+            System.out.println(path.toString());
+            System.out.println("Enter another *path source target* ...");
+            //System.exit(0);
+        } else {
+            System.out.println("The shortest path is: " + path.toString());
+        }
+    }
+
+    protected void listEdgeGivenWeight(Edge edge, int weight) {
+        if (edge != null) {
+            System.out.println("The edge searched having weight " + weight + " is: " + edge.getSource().getValue() + "-->" + edge.getTarget().getValue());
+        } else {
+            System.out.println("There is no such edge with weight: " + weight);
+        }
+    }
+
+    protected void listWeightGivenEdge(Node source, Node target, int weight) {
+        if (weight != -1) {
+            System.out.println("Given the edge from source " + source.getValue() + " target " + target.getValue() + " has weight: " + weight);
+        } else {
+            System.out.println("There is no such edge with source : " + source.toString() + " target: " + target.toString());
+
+        }
+
+    }
+
+    private void createSetElements() {
+        String parts[] = fileLines.get(0).split("//");
+        String tokens[] = parts[1].split(",");
+        int i = 0;
+        while (i < tokens.length) {
+            tokens[i] = tokens[i].trim();
+            setElements.add(tokens[i]);
+            ++i;
+        }
+    }
+
+    private String[] makeTokensGraphEdge(String line) {
+        String out[] = line.split("->");
+        out[0] = out[0].trim();
+        out[1] = out[1].trim();
+
+        int i;
+        if (out[1].contains(";") && !(out[1].contains("["))) {
+            i = out[1].indexOf(";");
+            out[1] = out[1].substring(0, i);
+        } else if (out[1].contains("[")) {
+            i = out[1].indexOf("[");
+            out[1] = out[1].substring(0, i);
+        }
+        out[0] = out[0].trim();
+        out[1] = out[1].trim();
+        return out;
+    }
+
+    private String makeTokensGraphWeight(String line) {
+
+        if (line.contains("[")) {
+            String out[] = line.split("label=\"");
+            //out[0] = out[0].trim();
+            out[1] = out[1].trim();
+
+
+            int i;
+            i = out[1].indexOf("\"");
+            out[1] = out[1].substring(0, i);
+            out[1] = out[1].trim();
+            return out[1];
+        } else {
+            return "";
+        }
+    }
+
+    private void makeTokensGraph() {
+
+        for (String line : fileLines) {
+            line = line.trim();
+            if (!line.equals("digraph testgraph{") && !line.equals("}") && line.charAt(0) != '/') {
+                String adjNodes[] = makeTokensGraphEdge(line);
+
+                String pair = adjNodes[0].trim() + "," + adjNodes[1].trim();
+                // This will remove all white spaces between a , b tutple
+                pair = pair.replaceAll("\\s+", "");
+                relationElements.add(pair);
+                String wt = makeTokensGraphWeight(line);
+                if (!wt.equals("")) {
+                    weightElements.add(wt);
+                }
+            }
+        }
+    }
 }
