@@ -33,4 +33,17 @@ public class Node {
         return Objects.equals(value, node.value);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Node{");
+        sb.append("value='").append(value).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
 }
