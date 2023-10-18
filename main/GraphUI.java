@@ -121,8 +121,6 @@ public class GraphUI {
         return sb.toString();
     }
 
-
-
     public String getCommand() {
         System.out.print(">>");
         return scanner.nextLine();
@@ -184,15 +182,14 @@ public class GraphUI {
             throw new RuntimeException(" target is not reachable from source");
         }
 
-
         int size = path.getPath().size();
-        //path has to be at least size 2 or more
+        // path has to be at least size 2 or more
         if (size == 0) {
             throw new RuntimeException("Shortest path is Empty or has no cost");
         } else if (size == 1) {
             System.out.println(path.toString());
             System.out.println("Enter another *path source target* ...");
-            //System.exit(0);
+            // System.exit(0);
         } else {
             System.out.println("The shortest path is: " + path.toString());
         }
@@ -200,7 +197,8 @@ public class GraphUI {
 
     protected void listEdgeGivenWeight(Edge edge, int weight) {
         if (edge != null) {
-            System.out.println("The edge searched having weight " + weight + " is: " + edge.getSource().getValue() + "-->" + edge.getTarget().getValue());
+            System.out.println("The edge searched having weight " + weight + " is: " + edge.getSource().getValue()
+                    + "-->" + edge.getTarget().getValue());
         } else {
             System.out.println("There is no such edge with weight: " + weight);
         }
@@ -208,9 +206,11 @@ public class GraphUI {
 
     protected void listWeightGivenEdge(Node source, Node target, int weight) {
         if (weight != -1) {
-            System.out.println("Given the edge from source " + source.getValue() + " target " + target.getValue() + " has weight: " + weight);
+            System.out.println("Given the edge from source " + source.getValue() + " target " + target.getValue()
+                    + " has weight: " + weight);
         } else {
-            System.out.println("There is no such edge with source : " + source.toString() + " target: " + target.toString());
+            System.out.println(
+                    "There is no such edge with source : " + source.toString() + " target: " + target.toString());
 
         }
 
@@ -249,9 +249,8 @@ public class GraphUI {
 
         if (line.contains("[")) {
             String out[] = line.split("label=\"");
-            //out[0] = out[0].trim();
+            // out[0] = out[0].trim();
             out[1] = out[1].trim();
-
 
             int i;
             i = out[1].indexOf("\"");

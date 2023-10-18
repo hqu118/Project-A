@@ -32,7 +32,7 @@ public class GraphControl {
      *
      * @param command
      * @return true if another command is required false if we need to terminate the
-     * program
+     *         program
      */
     public boolean processCommand(String command) {
 
@@ -56,7 +56,8 @@ public class GraphControl {
 
             case "help":
                 System.out.println("You can either *open* a file or *list* an opened file or *exit* the program");
-                System.out.println("Once a valid file is open you can *search* in the graph for a given edge or weight");
+                System.out
+                        .println("Once a valid file is open you can *search* in the graph for a given edge or weight");
                 System.out.println("You can also determine the shortest path using the *path* command");
                 break;
             case "list":
@@ -98,13 +99,16 @@ public class GraphControl {
                     switch (parts.length) {
 
                         case 2:
-                            sUI.listEdgeGivenWeight(graph.searchEdgeByWeight(Integer.valueOf(parts[1])), Integer.valueOf(parts[1]));
+                            sUI.listEdgeGivenWeight(graph.searchEdgeByWeight(Integer.valueOf(parts[1])),
+                                    Integer.valueOf(parts[1]));
                             break;
                         case 3:
-                            sUI.listWeightGivenEdge(new Node(parts[1]), new Node(parts[2]), graph.searchWeightByEdge(new Node(parts[1]), new Node(parts[2])));
+                            sUI.listWeightGivenEdge(new Node(parts[1]), new Node(parts[2]),
+                                    graph.searchWeightByEdge(new Node(parts[1]), new Node(parts[2])));
                             break;
                         default:
-                            System.out.println("Incorrect arguments for search: argument can be either a weight or an edge with source and target");
+                            System.out.println(
+                                    "Incorrect arguments for search: argument can be either a weight or an edge with source and target");
                     }
                     createGraph();
 
@@ -123,5 +127,19 @@ public class GraphControl {
     public static void main(String[] args) {
         GraphControl controller = new GraphControl();
         controller.execute();
+    }
+
+    // method to create a graph from the file
+    public static Graph createGraphFromFile(String fileName) {
+        GraphUI sUI = new GraphUI();
+        sUI.open(fileName);
+        return new Graph(sUI.getRelationElements(), sUI.getWeightElements());
+    }
+
+    // method to create a graph from the file
+    public static Graph createGraphFromInput() {
+        GraphUI sUI = new GraphUI();
+        sUI.open("input.txt"); // this is just to initialize the file status to true
+        return new Graph(sUI.getRelationElements(), sUI.getWeightElements());
     }
 }
