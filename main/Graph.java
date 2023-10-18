@@ -1,7 +1,9 @@
 package main;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Graph {
 	private HashMap<Node, EdgesLinkedList> adjacencyMap;
@@ -53,6 +55,124 @@ public class Graph {
 		}
 		return false;
 	}
+
+		/**
+	 * This method finds an edge with a specific weight, if there are more than one
+	 * you need to return the first you encounter. You must use Breath First Search
+	 * (BFS) strategy starting from the root.
+	 * <p>
+	 * You can create a data structure to keep track of the visited nodes Set<Node>
+	 * visited = new HashSet<>(); If you don't keep track of the visited nodes the
+	 * method will run forever!
+	 * <p>
+	 * <p>
+	 * In addition to the data structure visited you can only create new
+	 * datastructures of type EdgesLinkedList and NodesStackAndQue
+	 *
+	 * @param weight
+	 * @return the Edge with the specific weight, null if no edge with the specif
+	 *         weight exists in teh graph
+	 */
+	public Edge searchEdgeByWeight(int weight) {
+		
+		Set<Node> nodeVisited = new HashSet<>();
+		NodesStackAndQueue nodesDuringSearch = new NodesStackAndQueue();// create a new stack and queue to store the nodes
+		
+		Node sourceNode = root; // assign root node to the first source node
+		Node targetNode = root; // initialize the targetNode
+		nodesDuringSearch.append(sourceNode);
+		
+		EdgesLinkedList edgesLinkedList = adjacencyMap.get(sourceNode); // initialize the edges linked list for the root node
+		Edge edgeOfSourceNode = edgesLinkedList.get(0); // initialize the first edge from the source node
+
+		while (!nodeVisited.containsAll(adjacencyMap.keySet())) { // repeat nodeVisited contains all nodes of the graph
+
+			edgesLinkedList = adjacencyMap.get(sourceNode); //get the edges linked list for edges starting with the source node
+			if (!nodeVisited.contains(sourceNode)) {
+				nodeVisited.add(sourceNode);
+			}
+
+			for (int i = 0; i < edgesLinkedList.size(); i++) {
+				edgeOfSourceNode = edgesLinkedList.get(i); // edgeOfSourceNode will be the edges of the same source node
+
+				if (edgeOfSourceNode.getWeight() == weight) {
+					
+					return edgeOfSourceNode;
+					
+				} else {
+					targetNode = edgeOfSourceNode.getTarget();
+					
+					if (!nodeVisited.contains(targetNode)) {
+						nodesDuringSearch.append(targetNode);
+					}
+				}
+			}
+			sourceNode = nodesDuringSearch.pop(); // get the next node which will be whatever target node original source node has edge to
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the weight of the Edeg with Node source and Node target if the given
+	 * Edge is inside the graph. If there is no edge with the specified source and
+	 * target, the method returns -1 You must use Depth First Search (DFS) strategy
+	 * starting from the root.
+	 * <p>
+	 * RULES You can create a data structure to keep track of the visited nodes
+	 * Set<Node> visited = new HashSet<>(); If you don't keep track of the visited
+	 * nodes the method will run forever!
+	 * <p>
+	 * In addition to the data structure visited you can only create new data
+	 * structures of type
+	 * <p>
+	 * NodesStackAndQueue and EdgesLinkedList
+	 *
+	 * @param source
+	 * @param target
+	 * @return the weight of the first encountered edge with source and target, -1
+	 *         if no edge with the given source and target exists
+	 */
+	public int searchWeightByEdge(Node source, Node target) {
+		
+		Set<Node> nodeVisited = new HashSet<>();
+		NodesStackAndQueue nodesDuringSearch = new NodesStackAndQueue();// create a new stack and queue to store the nodes
+		
+		Node sourceNode = root; // assign root node to the first source node
+		Node targetNode = root; // initialize the targetNode
+		nodesDuringSearch.append(sourceNode);
+		
+		EdgesLinkedList edgesLinkedList = adjacencyMap.get(sourceNode); // initialize the edges linked list for the root node
+		Edge edgeOfSourceNode = edgesLinkedList.get(edgesLinkedList.size() - 1); // initialize the last edge from the source node
+
+		while (!nodeVisited.containsAll(adjacencyMap.keySet())) {
+			edgesLinkedList = adjacencyMap.get(sourceNode);
+
+			if (!nodeVisited.contains(sourceNode)) {
+				nodeVisited.add(sourceNode);
+			}
+
+			for (int i = 0; i < edgesLinkedList.size(); i++) {
+				edgeOfSourceNode = edgesLinkedList.get(i); // edgeOfSourceNode will be the edges of the same source node
+				
+				if ((edgeOfSourceNode.getSource().equals(source)) && (edgeOfSourceNode.getTarget().equals(target))) {
+					
+					return edgeOfSourceNode.getWeight();
+					
+				} else {
+					targetNode = edgeOfSourceNode.getTarget();
+					
+					if (!nodeVisited.contains(targetNode)) {
+						nodesDuringSearch.push(targetNode); //push the node into stack and queue so the last target node (if not in node visited) will be on the top and pop will return it
+					}
+				}
+			}
+			
+			sourceNode = nodesDuringSearch.pop();
+		}
+		return -1;
+	}
+
 
 	public Path computeShortestPath(Node source, Node target) {
 		int[] distanceFromSourceNode = new int[adjacencyMap.keySet().size()]; // create array to store distance values
