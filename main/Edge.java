@@ -27,11 +27,22 @@ public class Edge {
     public Node getSource() {
         return source;
     }
+
     public Node getTarget() {
         return target;
     }
 
     public int getWeight() {
         return weight;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Edge{");
+        sb.append("source=").append(source);
+        sb.append(", target=").append(target);
+        sb.append(", weight=").append(weight);
+        sb.append('}');
+        return sb.toString();
     }
 }
