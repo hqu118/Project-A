@@ -1,4 +1,5 @@
 package main;
-public class EmptyStackException {
-    
+
+public class EmptyStackException extends RuntimeException {
+
 }
