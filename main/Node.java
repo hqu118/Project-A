@@ -11,14 +11,17 @@ public class Node {
         next = null;
     }
 
+    // set next node
     public void setNext(Node n) {
         next = n;
     }
 
+    //get next node
     public Node getNext() {
         return next;
     }
 
+    
     public String getValue() {
         return value;
     }
