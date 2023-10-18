@@ -27,4 +27,11 @@ public class Edge {
     public Node getSource() {
         return source;
     }
+    public Node getTarget() {
+        return target;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
 }
