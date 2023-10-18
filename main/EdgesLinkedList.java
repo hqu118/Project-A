@@ -89,4 +89,76 @@ public class EdgesLinkedList {
             edge = edge.getNext();
         }
     }
+
+        /**
+     * This method adds an edge at a given position in the List
+     *
+     * @param pos:  an integer, which is the position
+     * @param edge: the edge to add
+     * @throws InvalidPositionException
+     */
+    public void insert(int pos, Edge edge) throws InvalidPositionException {
+        if (pos < 0 || pos > size() - 1) {
+            throw new InvalidPositionException("Position " + pos + " outside the list boundary");
+        }
+        
+        if(pos == 0) {
+        	// if insert to the start of the list, it is just prepending it
+        	this.prepend(edge);
+        }else {
+        	int i = 0;
+            Edge edgeInList = head;
+            Edge previousEdge = head;
+            
+            // increment i until it reaches the position value
+            while(i != pos) {
+            	i++;
+            	//previous edge will be the edge at index pos-1
+            	previousEdge = edgeInList;
+            	//edgeInList edge will be the edge at index pos+1
+            	edgeInList = edgeInList.getNext(); 
+            }
+            
+            //rearrange the pointers
+            previousEdge.setNext(edge);
+            edge.setNext(edgeInList);
+        }
+    }
+
+    /**
+     * This method removes an edge at a given position
+     *
+     * @param pos: an integer, which is the position
+     */
+    public void remove(int pos) throws InvalidPositionException {
+        if (pos < 0 || pos > size() - 1) {
+            throw new InvalidPositionException("Position " + pos + " outside the list boundary");
+        }
+        
+        // if remove from index 0, the head will point to the edge at index 1
+        if(pos == 0){
+        	Edge edgeInList = head;
+        	head = edgeInList.getNext();
+        }else {
+        	int i = 0;
+            Edge edgeInList = head;
+            Edge previousEdge = head;
+            Edge edgeAfter = head;
+            
+            //increment i until it reaches the position value
+            while(i != pos) {
+            	i++;
+            	//previous edge is edge at index pos-1
+            	previousEdge = edgeInList; 
+            	//edgeInList edge is edge at index pos, which is the edge we want to remove
+            	edgeInList = edgeInList.getNext();
+            }
+            
+            //edgeAfter is edge at index pos+1
+            edgeAfter = edgeInList.getNext();
+            
+            //rearrange the pointer
+            previousEdge.setNext(edgeAfter);
+        }
+    }
 }
