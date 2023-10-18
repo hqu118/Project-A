@@ -121,13 +121,13 @@ public class GraphUI {
         return sb.toString();
     }
 
-    //get the commands
+    // get the commands
     public String getCommand() {
         System.out.print(">>");
         return scanner.nextLine();
     }
 
-    //open the file
+    // open the file
     public void open(String file) {
         setFileName(file);
 
@@ -281,5 +281,46 @@ public class GraphUI {
                 }
             }
         }
+    }
+
+    // method to print the help menu
+    public void help() {
+        System.out.println("You can either *open* a file or *list* an opened file or *exit* the program");
+        System.out.println("Once a valid file is open you can *search* in the graph for a given edge or weight");
+    }
+
+    // method to print the exit menu
+    public void exit() {
+        System.out.println("Exiting the program");
+        System.exit(0);
+    }
+
+    // method to print the search menu
+    public void search() {
+        System.out.println("You can search for an edge or a weight");
+        System.out.println("Enter *edge source target* or *weight source target*");
+    }
+
+    // method to print the path menu
+    public void path() {
+        System.out.println("You can search for the shortest path");
+        System.out.println("Enter *path source target*");
+    }
+
+    // method to print the invalid command menu
+    public void invalidCommand() {
+        System.out.println("Invalid command");
+        System.out.println("Enter a valid command");
+    }
+
+    // method to print the invalid file menu
+    public void invalidFile() {
+        System.out.println("Invalid file name");
+        System.out.println("Enter a valid file name");
+    }
+
+    // method to print the invalid check menu
+    public void invalidCheck() {
+        System.out.println("Invalid check command: specify -r / -s/ -t ");
     }
 }
