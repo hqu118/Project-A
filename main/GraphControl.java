@@ -142,4 +142,21 @@ public class GraphControl {
         sUI.open("input.txt"); // this is just to initialize the file status to true
         return new Graph(sUI.getRelationElements(), sUI.getWeightElements());
     }
+
+    // method to delete a graph
+    public static void deleteGraph(Graph graph) {
+        graph = null;
+    }
+
+    // method to list the shortest path
+    public static void listShortestPath(Graph graph, Node source, Node target) {
+        GraphUI sUI = new GraphUI();
+        sUI.listShortestPath(graph.computeShortestPath(source, target));
+    }
+
+    // method to list the edge given weight
+    public static void listEdgeGivenWeight(Graph graph, int weight) {
+        GraphUI sUI = new GraphUI();
+        sUI.listEdgeGivenWeight(graph.searchEdgeByWeight(weight), weight);
+    }
 }
