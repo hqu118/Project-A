@@ -16,12 +16,11 @@ public class Node {
         next = n;
     }
 
-    //get next node
+    // get next node
     public Node getNext() {
         return next;
     }
 
-    
     public String getValue() {
         return value;
     }
@@ -49,4 +48,43 @@ public class Node {
         return sb.toString();
     }
 
+    // method to check if the node is the last node
+    public boolean isLast() {
+        return next == null;
+    }
+
+    // method to check if the node is the first node
+    public boolean isFirst() {
+        return next == null;
+    }
+
+    // method to check if the node is the first node
+    public boolean isNotFirst() {
+        return next != null;
+    }
+
+    // method to check if the node is the last node
+    public boolean isNotLast() {
+        return next != null;
+    }
+
+    // method to print the node
+    public void print() {
+        System.out.println(value);
+    }
+
+    // method to change value of node to a new value
+    public void changeValue(String newValue) {
+        value = newValue;
+    }
+
+    // method to clone a node
+    public Node clone() {
+        return new Node(value);
+    }
+
+    // method to check if the node is equal to another node
+    public boolean isEqual(Node node) {
+        return value.equals(node.getValue());
+    }
 }
